@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tailwind-output.css">
+    <script type="text/javascript" src="js/Markdown.Converter.js"></script>
+    <script type="text/javascript" src="js/Markdown.Sanitizer.js"></script>
+    <script type="text/javascript" src="js/Markdown.Editor.js"></script>
+</head>
+
+<body>
+
+    <section class="lg:flex  lg:h-screen my-20 mx-5">
+        <div class="lg:w-1/2  mr-2">
+            <div class="ml-10" id="wmd-button-bar-second"></div>
+            <textarea class="bg-stone-100 mt-3 pt-10 px-10 box-border w-full lg:h-screen h-96 " id="wmd-input-second">
+## Title
+            </textarea>
+        </div>
+        <div class="bg-stone-100 lg:w-1/2  mt-12 px-10 pt-8" id="wmd-preview-second"></div>
+    </section>
+
+    <script type="text/javascript">
+        const textarea = document.getElementById('wmd-input-second');
+        const preview = document.getElementById('wmd-preview-second');
+        document.addEventListener('paste', handlePasteImage)
+        // textarea.addEventListener('input', updatePreview)
+        async function handlePasteImage() {
+
+            let myclip = await navigator.clipboard.read();
+
+
+            let blob = await myclip[0].getType('image/png');
+
+            let buff = await blob.arrayBuffer();
+            let int8 = new Uint8Array(buff);
+
+            let binString = '';
+            for (num of int8) {
+                binString += String.fromCharCode(num);
+            }
+            let base64 = btoa(binString);
+            let uploaded = await uploadToHost(base64);
+            insertAtPointer(`![](${uploaded})`);
+            updatePreview();
+
+        }
+        function updatePreview() {
+            preview.innerHTML = convertToHTML(textarea.value);
+        }
+
+        function insertAtPointer(image) {
+            textarea.value = textarea.value.substring(0, textarea.selectionStart) + image + textarea.value.substring(textarea.selectionStart, textarea.value.length)
+        }
+        async function uploadToHost(image) {
+            const url = "https://api.imgbb.com/1/upload";
+            const params = {
+                key: '9011b08f2b9acbf945bad76d88374780'
+            };
+            let form = new FormData();
+            form.append('image', image);
+
+            const res = await fetch(url + '?' + new URLSearchParams(params), {
+                method: 'POST',
+                body: form
+            });
+            const resObj = await res.json();
+            const uploadedUrl = resObj.data.url;
+            // console.log(uploadedUrl);
+            return uploadedUrl;
+
+        }
+        function convertToHTML(markdown) {
+            let preview = markdown.replaceAll(/\!\[\]\((.+?)\)/g, '<img src=' + '$1' + '/>').replaceAll();
+            // console.log(preview);
+            return preview;
+        }
+
+
+        (function () {
+
+
+            var converter2 = new Markdown.Converter();
+
+
+            converter2.hooks.chain("plainLinkText", function (url) {
+                return url.replace(/^https?:\/\//, "");
+            });
+
+            var help = function () { alert("Do you need help?"); }
+            var options = {
+                helpButton: { handler: help },
+                strings: { quoteexample: "whatever you're quoting, put it right here" }
+            };
+            var editor2 = new Markdown.Editor(converter2, "-second", options);
+
+            editor2.run();
+        })();
+    </script>
+</body>
+
+</html>
