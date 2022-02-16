@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Online Markdown Editor</title>
+    <link rel="icon" type="image/x-icon" href="https://moevl.com/favicon.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tailwind-output.css">
     <script type="text/javascript" src="js/Markdown.Converter.js"></script>
@@ -14,8 +15,8 @@
 </head>
 
 <body>
-
-    <section class="lg:flex  lg:h-screen my-20 mx-5">
+    <h1 class="mx-auto pt-10 block text-2xl text-center">Online Markdown Editor with paste to upload image</h1>
+    <section class="lg:flex  lg:h-screen my-10 mx-5">
         <div class="lg:w-1/2  mr-2">
             <div class="ml-10" id="wmd-button-bar-second"></div>
             <textarea class="bg-stone-100 mt-3 pt-10 px-10 box-border w-full lg:h-screen h-96 " id="wmd-input-second">
@@ -28,7 +29,7 @@
     <script type="text/javascript">
         const textarea = document.getElementById('wmd-input-second');
         const preview = document.getElementById('wmd-preview-second');
-        document.addEventListener('paste', handlePasteImage)
+        document.addEventListener('paste', handlePasteImage);
         // textarea.addEventListener('input', updatePreview)
         async function handlePasteImage() {
 
