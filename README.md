@@ -1,1 +1,1 @@
-A single page "application" that lets you see your markdown as you write. View demo here: vanle
+An online markdown editor with "paste to upload image". View demo here: https://vanledev.github.io/md/
