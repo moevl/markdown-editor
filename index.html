@@ -17,16 +17,22 @@
     <script type="text/javascript" src="js/Markdown.Editor.js"></script>
   </head>
 
-  <body class="container">
-    <div class="text-center mx-auto">
-      <h1 class="pt-10 block text-2xl">Online Markdown Editor</h1>
-      <p>with paste to upload image, and quick upload to github pages</p>
+  <body class="container pt-10">
+    <div class="d-flex">
+      <div class="text-center mx-auto">
+        <h1 class="block text-2xl">Online Markdown Editor</h1>
+        <p>with paste to upload image, and quick upload to github pages</p>
+      </div>
+      <div>
+        <button class="btn btn-primary" onclick="sendToGithub()">
+          Post to Github
+        </button>
+      </div>
     </div>
 
-    <div class="d-flex justify-content-between">
+    <div class="">
       <div>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend"></div>
+        <div>
           <input
             type="text"
             class="form-control"
@@ -41,16 +47,24 @@
             id="tags"
             placeholder="Enter tags"
           />
+          <input
+            type="text"
+            class="form-control"
+            id="token"
+            placeholder="github token"
+          />
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="github username "
+          />
         </div>
 
         <div id="output"></div>
       </div>
-      <div>
-        <button class="btn btn-primary" onclick="sendToGithub()">
-          Post to Github
-        </button>
-      </div>
     </div>
+
     <section class="lg:flex lg:h-screen">
       <div class="lg:w-1/2 mr-2">
         <div class="ml-10" id="wmd-button-bar-second"></div>

@@ -1,6 +1,4 @@
-const token = "";
-const owner = "vanledev";
-const repo = "vanledev.github.io";
+
 const message = "Add new file via API";
 
 function generateTitle() {
@@ -23,6 +21,7 @@ tags: ${tags}
   return metadata;
 }
 function generateContent() {
+ 
   const content =
     generateMetadata() + document.getElementById("wmd-input-second").value;
   console.log(content);
@@ -40,7 +39,9 @@ function logNonUnicodeCharacters(str) {
 }
 function sendToGithub() {
   const content = btoa(unescape(encodeURIComponent(generateContent())));
-
+  const token = document.getElementById("token").value;
+  const owner = document.getElementById("username").value;
+  const repo = owner + ".github.io";
   const requestOptions = {
     method: "PUT",
     headers: {
